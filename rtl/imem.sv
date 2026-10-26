@@ -1,11 +1,17 @@
-module imem #(parameter int DEPTH = 1024) (
-  input  logic [31:0] address,
-  output logic [31:0] instruction
+module imem #(
+    parameter XLEN  = 32,
+    parameter DEPTH = 256 // Total Locations in Memory
+)(
+    input logic  [XLEN-1:0] address,
+    output logic [XLEN-1:0] instruction
 );
-  logic [31:0] mem [0:DEPTH-1];
-  always_comb begin
-    if (address[31:2] < DEPTH) instruction = mem[address[31:2]];
-    else                       instruction = 32'b0;
-  end
-endmodule
 
+    logic [XLEN-1:0] memory [0:DEPTH-1];
+    initial begin
+        $readmemh("program.mem", memory);
+    end
+    
+    // Autocalculate exact bits needed for word-aligned memory access and store it in imem
+    assign instruction = memory[address[$clog2(DEPTH)+1 : 2]];
+
+endmodule
