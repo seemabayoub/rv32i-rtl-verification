@@ -1,0 +1,35 @@
+# Vivado project and generated output
+.Xil/
+*.xpr
+*.xpi
+*.jou
+*.str
+*.log
+*.pb
+*.wdb
+*.wcfg
+*.ip_user_files/
+*.runs/
+*.cache/
+*.hw/
+*.sim/
+*.gen/
+*.srcs/
+
+# Simulation output
+sim/
+simulation/
+waves/
+*.vcd
+*.vpd
+*.fst
+*.wlf
+*.ucdb
+
+# Editor and operating-system files
+.vscode/
+.idea/
+*.swp
+*~
+.DS_Store
+
