@@ -29,13 +29,18 @@ module riscv_core #(
     alu_op_e     ALUControl;
     logic        take_branch;
 
-    // Extract instruction fields for decoding
-    logic [6:0] opcode_wire = instruction[6:0];
-    logic [2:0] funct3      = instruction[14:12];
-    logic       funct7_5    = instruction[30];
-    logic [4:0] rs1         = instruction[19:15];
-    logic [4:0] rs2         = instruction[24:20];
-    logic [4:0] rd          = instruction[11:7];
+    // Instruction field decode (continuous assignments, always follow 'instruction')
+    logic [6:0] opcode_wire;
+    logic [2:0] funct3;
+    logic       funct7_5;
+    logic [4:0] rs1, rs2, rd;
+
+    assign opcode_wire = instruction[6:0];
+    assign funct3      = instruction[14:12];
+    assign funct7_5    = instruction[30];
+    assign rs1         = instruction[19:15];
+    assign rs2         = instruction[24:20];
+    assign rd          = instruction[11:7];
 
     // Program Counter register
     programcounter #(XLEN) pc_module (
