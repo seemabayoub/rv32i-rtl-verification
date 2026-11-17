@@ -1,3 +1,4 @@
+// 32x32 general-purpose register file with x0 hardwired to zero
 module regfile #(
     parameter XLEN     = 32,
     parameter NUM_REGS = 32
@@ -15,6 +16,7 @@ module regfile #(
 
     logic [XLEN-1:0] regfile_array [0:NUM_REGS-1];
 
+    // Clear all registers on reset, or write data on rising clock edge (x0 stays 0)
     always_ff @(posedge clk) begin
         if (reset) begin
             for (int i = 0; i < NUM_REGS; i++) begin
@@ -26,7 +28,7 @@ module regfile #(
         end
     end
 
-    // Asynchronous reads with hardwired 0 for x0
+    // Asynchronous reads with x0 hardwired to zero
     assign read_data1 = (read_addr1 == 5'b0) ? {XLEN{1'b0}} : regfile_array[read_addr1];
     assign read_data2 = (read_addr2 == 5'b0) ? {XLEN{1'b0}} : regfile_array[read_addr2];
 
